@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🚚 Lemon Beauty Lab — Entregas</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f4f0;color:#1a1a1a;min-height:100vh}
+header{background:#fff;border-bottom:1px solid #e8e8e4;padding:0;position:sticky;top:0;z-index:100}
+.logo{padding:12px 16px;display:flex;align-items:center;gap:8px}
+.logo h1{font-size:15px;font-weight:600;color:#1a1a1a}
+.page{padding:12px 12px 80px}
+.fcard{background:#fff;border-radius:12px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:12px}
+.ftit{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+label{font-size:11px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:5px}
+select,input[type=date]{width:100%;border:1px solid #ddd;border-radius:10px;padding:10px 12px;font-size:13px;background:#fff;color:#1a1a1a;-webkit-appearance:none;margin-bottom:12px}
+.auxiliar-box{background:#f0f7f3;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#1a6b3c;font-weight:500}
+.search-inp{width:100%;border:1px solid #ddd;border-radius:10px;padding:10px 12px 10px 34px;font-size:13px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23aaa' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center;color:#1a1a1a;margin-bottom:6px}
+.items-list{background:#fff;border:1px solid #eee;border-radius:10px;max-height:260px;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-bottom:10px}
+.irow{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #f4f4f0}
+.irow:last-child{border-bottom:none}
+.iname{flex:1;font-size:13px;color:#1a1a1a}
+.qctrl{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.qb{width:28px;height:28px;border-radius:50%;border:1.5px solid #ddd;background:#f8f8f6;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#444}
+.qb:active{background:#e8e8e4}
+.qn{font-size:14px;font-weight:600;min-width:18px;text-align:center;color:#bbb}
+.qn.nz{color:#1a6b3c}
+.resumen{background:#f9f9f9;border-left:4px solid #1a6b3c;border-radius:4px;padding:10px 14px;margin-bottom:12px;display:none}
+.resumen-tit{font-size:11px;font-weight:600;color:#1a6b3c;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.resumen-body{font-size:13px;color:#1a1a1a;line-height:1.8}
+textarea{width:100%;border:1px solid #ddd;border-radius:10px;padding:10px 12px;font-size:13px;font-family:inherit;background:#fff;color:#1a1a1a;resize:vertical;min-height:65px;margin-bottom:12px}
+.firma-wrap{border:1.5px dashed #ddd;border-radius:10px;background:#f8f8f6;padding:8px;margin-bottom:12px}
+.firma-lbl{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#999;margin-bottom:6px}
+.btn-borrar{font-size:11px;padding:4px 10px;border-radius:7px;border:1px solid #ddd;background:#fff;color:#666;cursor:pointer}
+canvas{display:block;width:100%;height:110px;background:#fff;border-radius:7px;border:1px solid #eee;cursor:crosshair;touch-action:none}
+.btn-confirmar{background:#1a6b3c;color:#fff;border:none;border-radius:12px;padding:14px;font-size:14px;font-weight:600;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px}
+.ok-msg{display:none;background:#e8f5e9;color:#1a6b3c;border-radius:10px;padding:12px 14px;font-size:13px;align-items:center;gap:8px;margin-top:10px;font-weight:500}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>(function(){ emailjs.init({ publicKey: "xVNF5sEX6TKRfcwHK" }); })();</script>
+</head>
+<body>
+<header>
+  <div class="logo"><span>🚚</span><h1>Lemon Beauty Lab — Entrega</h1></div>
+</header>
+<div class="page">
+  <div class="fcard">
+    <div class="ftit">📋 Comprobante de entrega</div>
+
+    <label>Sucursal</label>
+    <select id="e-suc">
+      <option value="">— Selecciona sucursal —</option>
+      <option>Santa Fé</option><option>Polanco</option><option>Mitikah</option>
+      <option>Insurgentes</option><option>Durango</option><option>Interlomas</option>
+      <option>Satélite</option><option>Perisur</option>
+    </select>
+
+    <label>Fecha</label>
+    <input type="date" id="e-fecha">
+
+    <div class="auxiliar-box">🚚 Auxiliar: Edison</div>
+
+    <label>Buscar y agregar artículos entregados</label>
+    <input class="search-inp" type="search" id="e-search" placeholder="Buscar artículo..." oninput="renderList()" autocomplete="off">
+    <div class="items-list" id="e-items"></div>
+
+    <div class="resumen" id="resumen">
+      <div class="resumen-tit">Artículos a entregar</div>
+      <div class="resumen-body" id="resumen-body"></div>
+    </div>
+
+    <label>Nombre de quien recibe + observaciones</label>
+    <textarea id="obs" placeholder="Ej: María González — Todo correcto, faltó 1 pieza..."></textarea>
+
+    <div class="firma-wrap">
+      <div class="firma-lbl">
+        <span>✍️ Firma de quien recibe</span>
+        <button class="btn-borrar" onclick="clearC()">Borrar</button>
+      </div>
+      <canvas id="firma"></canvas>
+      <div style="font-size:10px;color:#bbb;margin-top:5px;text-align:center">Firma con el dedo directamente en la pantalla</div>
+    </div>
+
+    <button class="btn-confirmar" onclick="confirmar()">✅ Confirmar entrega</button>
+    <div class="ok-msg" id="ok-msg">✅ Entrega registrada con firma digital. Comprobante enviado.</div>
+  </div>
+</div>
+
+<script>
+const CAT = {"Gel polish / Uñas":[{"label":"CND Shellac — Wear extender"},{"label":"CND Shellac — Aurora"},{"label":"CND Shellac — Black cherry"},{"label":"CND Shellac — PLEXIGEL"},{"label":"CND Shellac — Of the moment"},{"label":"CND Shellac — Black tuxedo"},{"label":"CND Shellac — White gloves"},{"label":"CND Shellac — Red carpet"},{"label":"CND Shellac — Blush pink"},{"label":"CND Shellac — SOLAROIL"},{"label":"CND Scrub fresh"},{"label":"CND Shellac — TOP"},{"label":"CND Shellac — BASE"},{"label":"CND Shellac — Cream puff"},{"label":"CND Shellac — Oxblood rouge"},{"label":"CND Shellac — CUTICLE ERASER"},{"label":"CND Offly Fast"},{"label":"CND Shellac — Cashmere wrap"},{"label":"CND Shellac — Romantique"},{"label":"CND Shellac — Decadence"},{"label":"CND Shellac — Lobster roll"},{"label":"CND Shellac — Beau"},{"label":"CND Shellac — Negligee nuisette"},{"label":"CND Shellac — Black pool"},{"label":"CND Shellac — Studio blanc"},{"label":"CND Shellac — Naked naiveté"},{"label":"CND Shellac — Hot pop pink"},{"label":"CND Shellac Fedora — 114"},{"label":"CND Shellac Fedora — Bouquet"},{"label":"Dia Activateur"},{"label":"Organic — 092 Love Kiss"},{"label":"Organic — 005 Rubber clear"},{"label":"PressOn gel"},{"label":"PressOn Tips — Almond short"},{"label":"PressOn Tips — Square short"},{"label":"PressOn Tips — Coffin short"},{"label":"PressOn Tips — Stiletto medium"},{"label":"OPI Infinite shine — Blanco"},{"label":"OPI Infinite shine — Negro"},{"label":"Chanel Le Vernis — Rouge Noir"},{"label":"Chanel Le Vernis — La Base Camelia"},{"label":"Chanel Le Gel coat"},{"label":"Limas Sponge"},{"label":"Palitos de Naranjo"},{"label":"Limas adhesivas"},{"label":"Rubber base — 1"},{"label":"Rubber base — 2"},{"label":"Rubber base — 3"},{"label":"Rubber base — 4"},{"label":"Top Glossy"},{"label":"Top coat"},{"label":"Gel color — 55"},{"label":"Gel color — 76"},{"label":"Gel color — 85"},{"label":"Gel color — 104"},{"label":"Gel color — 113"},{"label":"Gel color — 117"},{"label":"Gel color — 123"},{"label":"Gel color — 126"},{"label":"Gel color — 131"},{"label":"Gel color — 134"},{"label":"Gel color — 139"},{"label":"Gel color — 140"},{"label":"Gel color — 144"},{"label":"Gel color — 170"},{"label":"Gel color — 176"},{"label":"Gel color — 177"},{"label":"Gel color — 178"},{"label":"Bolsas para esterilizar"},{"label":"Toallas Mani"},{"label":"Toallas Pedi"}],"Coloración capilar":[{"label":"iNOA Oil Developer Vol 10"},{"label":"iNOA Oil Developer Vol 20"},{"label":"iNOA Oil Developer Vol 30"},{"label":"iNOA — 4"},{"label":"iNOA — 5"},{"label":"iNOA — 6"},{"label":"iNOA — 7"},{"label":"iNOA — 8"},{"label":"iNOA — 9"},{"label":"iNOA — 10"},{"label":"iNOA — 5.1"},{"label":"iNOA — 5.3"},{"label":"iNOA — 5.32"},{"label":"iNOA — 6.1"},{"label":"iNOA — 6.13"},{"label":"iNOA — 6.32"},{"label":"iNOA — 6.66"},{"label":"iNOA — 7.1"},{"label":"iNOA — 7.13"},{"label":"iNOA — 7.18"},{"label":"iNOA — 7.23"},{"label":"iNOA — 7.3"},{"label":"iNOA — 7.31"},{"label":"iNOA — 8.1"},{"label":"iNOA — 8.13"},{"label":"iNOA — 9.1"},{"label":"Majirel COOL COVER — 5"},{"label":"Majirel COOL COVER — 6"},{"label":"Majirel COOL COVER — 7"},{"label":"Majirel COOL COVER — 8"},{"label":"Majirel COOL COVER — 9"},{"label":"Majirel — 4"},{"label":"Majirel — 5"},{"label":"Majirel — 6"},{"label":"Majirel — 7"},{"label":"Majirel — 8"},{"label":"Majirel — 9"},{"label":"Majirel — 10"},{"label":"Oxydant Vol 20"},{"label":"Oxydant Vol 30"},{"label":"COLORWEAR — 7.1"},{"label":"COLORWEAR — 7.32"},{"label":"COLORWEAR — 8.1"},{"label":"COLORWEAR — 9.2"},{"label":"COLORWEAR Gloss Toner — 06N"},{"label":"COLORWEAR Gloss Toner — 07N"},{"label":"COLORWEAR Gloss Toner — 08N"},{"label":"COLORWEAR Peroxido 9.5%"},{"label":"EVOLUTION — 6 nl"},{"label":"EVOLUTION — 7 nl"},{"label":"EVOLUTION — 8 nl"},{"label":"EVOLUTION — 5.32"},{"label":"EVOLUTION — 6.1"},{"label":"EVOLUTION — 6.32"},{"label":"EVOLUTION — 6.4"},{"label":"EVOLUTION — 7.1"},{"label":"EVOLUTION — 7.21"},{"label":"EVOLUTION — 7.4"},{"label":"EVOLUTION — 8.1"},{"label":"EVOLUTION — 8.13"},{"label":"EVOLUTION — 8.3"},{"label":"EVOLUTION — 9.13"},{"label":"OXID'O — Vol 10"},{"label":"OXID'O — Vol 20"},{"label":"OXID'O — Vol 30"},{"label":"OXID'O — Vol 40"},{"label":"K&K-Liss — Paso 1"},{"label":"K&K-Liss — Paso 2"},{"label":"K&K-Liss — Paso 3"}],"Alfaparf EVOLUTION":[{"label":"EVOLUTION — 4 NB"},{"label":"EVOLUTION — 5 NB"},{"label":"EVOLUTION — 6 NB"},{"label":"EVOLUTION — 7 NB"},{"label":"EVOLUTION — 8 NB"},{"label":"EVOLUTION — 4.32"},{"label":"EVOLUTION — 5.22"},{"label":"EVOLUTION — 5.35"},{"label":"EVOLUTION — 5.6"},{"label":"EVOLUTION — 6.23"},{"label":"EVOLUTION — 6.35"},{"label":"EVOLUTION — 6.53"},{"label":"EVOLUTION — 6.6"},{"label":"EVOLUTION — 6.7"},{"label":"EVOLUTION — 7.35"},{"label":"EVOLUTION — 7.43"},{"label":"EVOLUTION — 7.53"},{"label":"EVOLUTION — 7.6"},{"label":"EVOLUTION — 8.34"},{"label":"EVOLUTION — 9.2"}],"Alfaparf COLORWEAR":[{"label":"COLORWEAR — 5.1"},{"label":"COLORWEAR — 5.32"},{"label":"COLORWEAR — 5.33"},{"label":"COLORWEAR — 6.32"},{"label":"COLORWEAR — 6.4"},{"label":"COLORWEAR — 6.66I"},{"label":"COLORWEAR — 7.12"},{"label":"COLORWEAR — 7.21"},{"label":"COLORWEAR — 7.34"},{"label":"COLORWEAR — 8.12"},{"label":"COLORWEAR — 8.31"},{"label":"COLORWEAR — 9.02"},{"label":"COLORWEAR — 9.13"},{"label":"COLORWEAR — 9.21"},{"label":"COLORWEAR — 10.02"},{"label":"COLORWEAR — 10.13"},{"label":"COLORWEAR — 10.21"},{"label":"COLORWEAR — 10.31"}],"Alfaparf OXIDO":[{"label":"OXID'O — Vol 5"},{"label":"OXID'O — 3% Vol 10"},{"label":"OXID'O — 9% Vol 30"}],"Cuidado capilar":[{"label":"Moroccanoil Tratamiento negro 10ml"},{"label":"Moroccanoil Tratamiento blanco 10ml"},{"label":"Moroccanoil Mascarilla Hydration 250ml"},{"label":"Moroccanoil Mascarilla Hydration 500ml"},{"label":"Moroccanoil Repair 500ml"},{"label":"Olaplex No.1 Bond Multiplier"},{"label":"Olaplex No.4 Shampoo"},{"label":"Olaplex No.5 Shampoo"},{"label":"Ampolletas Beauty Gemesis"},{"label":"Mascarilla Alfa Curls"},{"label":"Mascarilla Alfa Reparative verde"},{"label":"Shampoo Alfa Scalp renew"},{"label":"Shampoo Alfa Reconstruction verde"},{"label":"Brasil Cacau shampoo"},{"label":"Brasil Cacau primer"},{"label":"L'Oréal Absolut repair shampoo"},{"label":"Sebastian Bonding shampoo"},{"label":"Sebastian Mascarilla"}],"Mucota":[{"label":"Mucota Aire Paso 1"},{"label":"Mucota Aire Paso 2"},{"label":"Mucota Aire Paso 3"},{"label":"Mucota Aire Paso 4"},{"label":"Mucota Scena Adel"},{"label":"Mucota Scena Calore"},{"label":"Mucota 9 (100ml)"},{"label":"Mucota 10 (100ml)"},{"label":"Mucota Scena Brava 800ml"},{"label":"Mucota Scena Ethos 800ml"}],"Uñas acrílico":[{"label":"Polvo acrílico Organic"},{"label":"Organic monomero"},{"label":"Efecto — 1"},{"label":"Efecto — 2"},{"label":"Efecto — 3"},{"label":"Efecto — 4"},{"label":"Efecto — 5"}],"Barba":[{"label":"Gel para afeitar 4x4"},{"label":"After shave 4x4"},{"label":"Polvo seco voluminizador 4x4"},{"label":"Cuchillas Dorco x100"}],"Cafetería":[{"label":"Coca Cola Normal"},{"label":"Agua Ciel"},{"label":"Café Nespresso (cápsulas)"},{"label":"Jabón trastes Accion"}]};
+
+const ALL = Object.values(CAT).flat();
+let eQtys = {};
+
+function renderList() {
+  const q = document.getElementById('e-search').value.toLowerCase().trim();
+  const list = document.getElementById('e-items');
+  list.innerHTML = '';
+  const filtered = q ? ALL.filter(i => i.label.toLowerCase().includes(q)) : ALL.slice(0, 50);
+  filtered.slice(0, 80).forEach(item => {
+    const k = item.label; const v = eQtys[k] || 0;
+    const row = document.createElement('div'); row.className = 'irow';
+    row.innerHTML = `<span class="iname">${k}</span><div class="qctrl"><button class="qb" ontouchstart="" onclick="adjE('${k.replace(/'/g,"\\'")}', -1)">−</button><span class="qn ${v>0?'nz':''}">${v}</span><button class="qb" ontouchstart="" onclick="adjE('${k.replace(/'/g,"\\'")}', 1)">+</button></div>`;
+    list.appendChild(row);
+  });
+  if (filtered.length > 80) { const m = document.createElement('div'); m.style='padding:8px 12px;font-size:11px;color:#999;text-align:center'; m.textContent=`+ ${filtered.length-80} más — usa el buscador`; list.appendChild(m); }
+  const sel = Object.entries(eQtys).filter(([k,v]) => v > 0);
+  const res = document.getElementById('resumen');
+  const resBody = document.getElementById('resumen-body');
+  if (sel.length > 0) { res.style.display='block'; resBody.innerHTML = sel.map(([k,v]) => '• ' + k + ' ×' + v).join('<br>'); }
+  else { res.style.display='none'; }
+}
+
+function adjE(k, d) { eQtys[k] = Math.max(0, (eQtys[k]||0) + d); renderList(); }
+
+// Firma
+let ctx = null, can = null, painting = false;
+window.addEventListener('load', () => {
+  can = document.getElementById('firma');
+  const r = can.getBoundingClientRect();
+  can.width = r.width * devicePixelRatio;
+  can.height = 110 * devicePixelRatio;
+  ctx = can.getContext('2d');
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  ctx.strokeStyle = '#1a6b3c'; ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  const gp = e => { const r = can.getBoundingClientRect(); return { x: e.clientX-r.left, y: e.clientY-r.top }; };
+  const gt = e => { const r = can.getBoundingClientRect(), t = e.touches[0]; return { x: t.clientX-r.left, y: t.clientY-r.top }; };
+  can.onmousedown = e => { painting=true; ctx.beginPath(); const p=gp(e); ctx.moveTo(p.x,p.y); };
+  can.onmousemove = e => { if(!painting) return; const p=gp(e); ctx.lineTo(p.x,p.y); ctx.stroke(); };
+  can.onmouseup = () => painting=false;
+  can.addEventListener('touchstart', e => { e.preventDefault(); painting=true; ctx.beginPath(); const p=gt(e); ctx.moveTo(p.x,p.y); }, {passive:false});
+  can.addEventListener('touchmove', e => { e.preventDefault(); if(!painting) return; const p=gt(e); ctx.lineTo(p.x,p.y); ctx.stroke(); }, {passive:false});
+  can.addEventListener('touchend', () => painting=false);
+
+  // Set today's date
+  document.getElementById('e-fecha').value = new Date().toISOString().split('T')[0];
+  renderList();
+});
+
+function clearC() { if(ctx) ctx.clearRect(0,0,can.width,can.height); }
+
+function confirmar() {
+  const suc = document.getElementById('e-suc').value;
+  if (!suc) { alert('Selecciona la sucursal.'); return; }
+  const articulos = Object.entries(eQtys).filter(([k,v]) => v>0).map(([k,v]) => '• '+k+' ×'+v).join('\n');
+  if (!articulos) { alert('Agrega al menos un artículo entregado.'); return; }
+  const fecha = document.getElementById('e-fecha').value;
+  const obs = document.getElementById('obs').value || 'Sin observaciones';
+  const firmaImg = can ? can.toDataURL('image/png') : '';
+
+  document.getElementById('ok-msg').style.display = 'flex';
+
+  emailjs.send('service_bdmo9fi', 'template_hgm2iah', {
+    sucursal: suc, fecha, auxiliar: 'Edison',
+    recibio: obs, articulos, observaciones: obs, firma_img: firmaImg
+  }).then(() => console.log('✅ Enviado')).catch(err => console.warn('❌', err));
+}
+</script>
+</body>
+</html>
